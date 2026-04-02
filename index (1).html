@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hubexo · Product Specialist — Product Case</title>
+<meta name="description" content="Product Case presentation for Product Specialist role at Hubexo — three cases on backlog triage, global-regional alignment, and product-led growth.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --lime: #C8F135;
+    --purple: #1E1230;
+    --purple-mid: #2E1B4A;
+    --white: #ffffff;
+    --grey: #8B8B9A;
+    --sidebar: 234px;
+  }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #111111;
+    color: var(--white);
+    display: flex;
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    width: var(--sidebar);
+    min-width: var(--sidebar);
+    background: var(--purple);
+    height: 100vh;
+    overflow-y: auto;
+    border-right: 1px solid rgba(200,241,53,.12);
+    padding: 18px 0;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+  .sidebar::-webkit-scrollbar { width: 3px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(200,241,53,.2); border-radius: 2px; }
+
+  .logo-wrap {
+    padding: 0 18px 18px;
+    border-bottom: 1px solid rgba(200,241,53,.12);
+    margin-bottom: 14px;
+  }
+  .logo { font-family: 'DM Mono', monospace; font-size: 15px; color: var(--lime); letter-spacing: .05em; }
+  .logo-sub { font-size: 9px; color: var(--grey); letter-spacing: .15em; text-transform: uppercase; margin-top: 3px; }
+
+  .sec-lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--lime);
+    padding: 14px 18px 5px;
+    opacity: .6;
+  }
+
+  .nav-item {
+    padding: 9px 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    border-left: 2px solid transparent;
+    transition: all .18s;
+  }
+  .nav-item:hover { background: rgba(200,241,53,.06); }
+  .nav-item.active {
+    border-left-color: var(--lime);
+    background: rgba(200,241,53,.09);
+  }
+  .nav-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--lime);
+    opacity: .5;
+    margin-top: 2px;
+    min-width: 14px;
+  }
+  .nav-item.active .nav-num { opacity: 1; }
+  .nav-txt { font-size: 11px; color: rgba(255,255,255,.5); line-height: 1.4; }
+  .nav-item.active .nav-txt { color: rgba(255,255,255,.9); }
+
+  /* ─── MAIN ─── */
+  .main {
+    flex: 1;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ─── SLIDES ─── */
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(16px);
+    transition: opacity .38s ease, transform .38s ease;
+    overflow-y: auto;
+    display: flex;
+    align-items: stretch;
+  }
+  .slide::-webkit-scrollbar { width: 4px; }
+  .slide::-webkit-scrollbar-thumb { background: rgba(200,241,53,.15); border-radius: 2px; }
+  .slide.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+
+  .inner {
+    width: 100%;
+    min-height: 100vh;
+    padding: 52px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ─── SLIDE BACKGROUNDS ─── */
+  .s-cover  { background: var(--purple); }
+  .s-lime   { background: var(--lime); }
+  .s-cream  { background: #F0EDE6; }
+  .s-purple { background: var(--purple-mid); }
+  .s-dark   { background: #0D0D0D; }
+  .s-c1     { background: #111111; }
+  .s-c2     { background: #0D0D0D; }
+
+  /* ─── COVER SLIDE ─── */
+  .grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,241,53,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,241,53,.04) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none;
+  }
+  .glow {
+    position: absolute; top: -80px; right: -80px;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,241,53,.13) 0%, transparent 68%);
+    pointer-events: none;
+  }
+  .cover-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--lime); margin-bottom: 24px; opacity: .9;
+    position: relative;
+  }
+  .cover-h {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(40px, 5.5vw, 72px);
+    line-height: 1.06; margin-bottom: 22px; position: relative;
+  }
+  .cover-h em { color: var(--lime); font-style: italic; }
+  .cover-sub {
+    font-size: 14px; color: rgba(255,255,255,.5);
+    max-width: 460px; line-height: 1.7; margin-bottom: 36px; position: relative;
+  }
+  .pills { display: flex; flex-wrap: wrap; gap: 9px; position: relative; }
+  .pill {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    padding: 5px 13px; border-radius: 100px;
+    border: 1px solid rgba(200,241,53,.3); color: rgba(200,241,53,.75);
+  }
+  .lime-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--lime); }
+
+  /* ─── SECTION TITLE SLIDES ─── */
+  .case-bg {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(100px, 18vw, 200px); line-height: .85;
+    position: absolute; right: 32px; bottom: 16px;
+    font-weight: 400; pointer-events: none; user-select: none;
+  }
+  .case-bg-dark  { color: rgba(255,255,255,.05); }
+  .case-bg-light { color: rgba(30,18,48,.08); }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 14px;
+  }
+  .ey-dark  { color: rgba(30,18,48,.65); }
+  .ey-light { color: rgba(200,241,53,.75); }
+
+  .sec-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(26px, 3.8vw, 52px);
+    line-height: 1.12; max-width: 580px; margin-bottom: 18px;
+  }
+  .st-dark  { color: #1E1230; }
+  .st-light { color: var(--white); }
+
+  .ctx {
+    font-size: 13.5px; line-height: 1.75;
+    max-width: 540px; padding: 15px 20px; border-radius: 8px; margin-top: 6px;
+  }
+  .ctx-dark  { background: rgba(30,18,48,.1); color: rgba(30,18,48,.72); border-left: 3px solid rgba(30,18,48,.25); }
+  .ctx-light { background: rgba(255,255,255,.07); color: rgba(255,255,255,.68); border-left: 3px solid rgba(200,241,53,.45); }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .tag {
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    padding: 4px 10px; border-radius: 100px;
+  }
+  .tg-red    { background: rgba(255,80,80,.1); color: #FF9090; border: 1px solid rgba(255,80,80,.2); }
+  .tg-lime   { background: rgba(200,241,53,.12); color: var(--lime); border: 1px solid rgba(200,241,53,.25); }
+  .tg-purple { background: rgba(92,61,130,.25); color: #C4A8FF; border: 1px solid rgba(92,61,130,.4); }
+  .s-cream .tg-red    { background: rgba(180,30,30,.1); color: #9B1C1C; border: 1px solid rgba(180,30,30,.35); }
+  .s-cream .tg-lime   { background: rgba(60,90,10,.1); color: #3B5A0A; border: 1px solid rgba(60,90,10,.35); }
+  .s-cream .tg-purple { background: rgba(60,30,100,.1); color: #3D1F6E; border: 1px solid rgba(60,30,100,.35); }
+
+  /* ─── CONTENT SLIDES ─── */
+  .c-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--lime); margin-bottom: 10px; opacity: .8;
+  }
+  .c-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(20px, 2.8vw, 34px);
+    color: var(--white); line-height: 1.2; margin-bottom: 28px;
+  }
+
+  .two   { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .four  { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .card {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px; padding: 18px;
+    transition: border-color .2s;
+  }
+  .card:hover { border-color: rgba(200,241,53,.22); }
+  .card-lbl {
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: var(--lime); margin-bottom: 8px; opacity: .8;
+  }
+  .card-h { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 7px; line-height: 1.3; }
+  .card-b { font-size: 12px; color: rgba(255,255,255,.52); line-height: 1.65; }
+  .card-accent { width: 26px; height: 3px; border-radius: 2px; margin-bottom: 10px; background: var(--lime); }
+  .ca-purple { background: #7B5EA7; }
+  .ca-red    { background: #FF7070; }
+
+  /* quadrant */
+  .quad {
+    display: grid; grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr; gap: 3px;
+    border-radius: 9px; overflow: hidden; height: 196px;
+  }
+  .qc { padding: 14px; display: flex; flex-direction: column; justify-content: center; }
+  .q1 { background: rgba(200,241,53,.15); }
+  .q2 { background: rgba(200,241,53,.08); }
+  .q3 { background: rgba(255,255,255,.05); }
+  .q4 { background: rgba(255,255,255,.03); }
+  .qt { font-size: 11px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+  .qs { font-size: 10px; color: rgba(255,255,255,.42); line-height: 1.4; }
+
+  /* step list */
+  .steps { list-style: none; }
+  .steps li { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.05); }
+  .steps li:last-child { border: none; }
+  .sn { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--lime); opacity: .45; min-width: 20px; line-height: 1; }
+  .sh { font-size: 12px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+  .sb2 { font-size: 11px; color: rgba(255,255,255,.48); line-height: 1.5; }
+
+  /* timeline */
+  .tl { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; }
+  .tlp { padding: 16px 18px; border-top: 3px solid rgba(255,255,255,.1); }
+  .tlp.ap { border-top-color: var(--lime); }
+  .tl-lbl { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--lime); margin-bottom: 7px; opacity: .65; }
+  .tlp.ap .tl-lbl { opacity: 1; }
+  .tl-h { font-size: 12px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+  .tl-li { list-style: none; }
+  .tl-li li { font-size: 11px; color: rgba(255,255,255,.48); padding: 2px 0 2px 12px; position: relative; line-height: 1.4; }
+  .tl-li li::before { content: '→'; position: absolute; left: 0; color: var(--lime); opacity: .55; font-size: 10px; }
+
+  /* assumption box */
+  .abox { background: rgba(200,241,53,.06); border: 1px solid rgba(200,241,53,.18); border-radius: 8px; padding: 12px 16px; margin-top: 16px; }
+  .abox-lbl { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--lime); margin-bottom: 5px; }
+  .abox p { font-size: 11px; color: rgba(255,255,255,.52); line-height: 1.55; }
+
+  /* sticky quote */
+  .sticky {
+    background: rgba(200,241,53,.05); border: 1px dashed rgba(200,241,53,.22);
+    border-radius: 8px; padding: 13px 18px;
+    font-size: 12px; color: rgba(255,255,255,.58); line-height: 1.65; font-style: italic;
+    margin-top: 16px;
+  }
+
+  .divider { height: 1px; background: rgba(255,255,255,.07); margin: 18px 0; }
+
+  /* funnel */
+  .funnel { margin-top: 4px; }
+  .fs { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,.05); }
+  .fs:last-child { border: none; }
+  .fi { font-size: 14px; min-width: 22px; }
+  .fl { font-size: 12px; font-weight: 600; color: var(--white); min-width: 120px; }
+  .fb { flex: 1; height: 5px; background: rgba(255,255,255,.06); border-radius: 3px; overflow: hidden; }
+  .ff { height: 100%; border-radius: 3px; }
+  .fh  { background: var(--lime); }
+  .fme { background: #FFAA60; }
+  .flo { background: #FF7070; }
+  .fp  { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,.45); min-width: 30px; text-align: right; }
+
+  /* ─── NAV CONTROLS ─── */
+  .nav-controls {
+    position: fixed; bottom: 22px; right: 26px;
+    display: flex; gap: 8px; z-index: 100;
+  }
+  .nbtn {
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid rgba(200,241,53,.35);
+    background: rgba(30,18,48,.9); color: var(--lime);
+    font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s; backdrop-filter: blur(6px);
+  }
+  .nbtn:hover { background: var(--lime); color: #111; }
+  .nbtn:disabled { opacity: .22; pointer-events: none; }
+  .counter {
+    position: fixed; bottom: 30px; right: 108px;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: var(--grey); z-index: 100;
+  }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 700px) {
+    .sidebar { display: none; }
+    .inner { padding: 36px 28px; }
+    .two, .three, .four { grid-template-columns: 1fr; }
+    .tl { grid-template-columns: 1fr; }
+    .cover-h { font-size: 34px; }
+    .quad { height: auto; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fu {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .slide.active .inner > * { animation: fu .4s ease both; }
+  .slide.active .inner > *:nth-child(2) { animation-delay: .07s; }
+  .slide.active .inner > *:nth-child(3) { animation-delay: .14s; }
+  .slide.active .inner > *:nth-child(4) { animation-delay: .21s; }
+  .slide.active .inner > *:nth-child(5) { animation-delay: .28s; }
+  .slide.active .inner > *:nth-child(6) { animation-delay: .35s; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     SIDEBAR
+════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="logo-wrap">
+    <div class="logo">hubexo</div>
+    <div class="logo-sub">Product Specialist · Case</div>
+  </div>
+
+  <div class="sec-lbl">Intro</div>
+  <div class="nav-item active" data-s="0">
+    <span class="nav-num">00</span><span class="nav-txt">Cover</span>
+  </div>
+
+  <div class="sec-lbl">Case 1 · Backlog</div>
+  <div class="nav-item" data-s="1"><span class="nav-num">01</span><span class="nav-txt">Situation</span></div>
+  <div class="nav-item" data-s="2"><span class="nav-num">02</span><span class="nav-txt">Prioritization Framework</span></div>
+  <div class="nav-item" data-s="3"><span class="nav-num">03</span><span class="nav-txt">90-Day Execution Plan</span></div>
+
+  <div class="sec-lbl">Case 2 · Global vs NA</div>
+  <div class="nav-item" data-s="4"><span class="nav-num">04</span><span class="nav-txt">Situation</span></div>
+  <div class="nav-item" data-s="5"><span class="nav-num">05</span><span class="nav-txt">Stakeholder Navigation</span></div>
+  <div class="nav-item" data-s="6"><span class="nav-num">06</span><span class="nav-txt">Launch Decision</span></div>
+
+  <div class="sec-lbl">Case 3 · Growth</div>
+  <div class="nav-item" data-s="7"><span class="nav-num">07</span><span class="nav-txt">Diagnosis</span></div>
+  <div class="nav-item" data-s="8"><span class="nav-num">08</span><span class="nav-txt">Metrics &amp; Signals</span></div>
+  <div class="nav-item" data-s="9"><span class="nav-num">09</span><span class="nav-txt">Realignment Roadmap</span></div>
+</aside>
+
+<!-- ═══════════════════════════════════════
+     SLIDES
+════════════════════════════════════════ -->
+<main class="main">
+
+  <!-- ── SLIDE 00: COVER ── -->
+  <div class="slide active" id="s0">
+    <div class="inner s-cover">
+      <div class="grid-bg"></div>
+      <div class="glow"></div>
+      <div class="cover-tag">Product Case &middot; Product Specialist</div>
+      <h1 class="cover-h">Execution,<br><em>not ideation,</em><br>is the constraint.</h1>
+      <p class="cover-sub">Three cases on backlog triage, global-regional alignment, and product-led growth &mdash; approached with structure, speed, and commercial clarity.</p>
+      <div class="pills">
+        <span class="pill">Construction Wire</span>
+        <span class="pill">Product Specialist</span>
+        <span class="pill">90-Day Lens</span>
+        <span class="pill">Cross-functional Delivery</span>
+      </div>
+      <div class="lime-bar"></div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 01: C1 SITUATION ── -->
+  <div class="slide" id="s1">
+    <div class="inner s-cream">
+      <div class="case-bg case-bg-light">1</div>
+      <div class="eyebrow ey-dark">Case 01 &middot; Backlog Ownership</div>
+      <h2 class="sec-title st-dark">Chaotic backlog. Renewal risk. 90 days. Where do I start?</h2>
+      <div class="ctx ctx-dark">
+        <strong>The situation:</strong> Inherited an unstructured backlog from four teams — no prioritization, no clear ownership. Customers are flagging data quality and usability issues that are beginning to threaten renewals. Leadership expects delivery on global priorities within 90 days. Engineering capacity is limited and partially committed.
+      </div>
+      <div class="tags">
+        <span class="tag tg-red">Renewal Risk</span>
+        <span class="tag tg-purple">Limited Eng Capacity</span>
+        <span class="tag tg-lime">90-Day Window</span>
+        <span class="tag tg-red">Unstructured Backlog</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 02: C1 PRIORITIZATION ── -->
+  <div class="slide" id="s2">
+    <div class="inner s-c1">
+      <div class="c-eyebrow">Case 01 &middot; Framework</div>
+      <h2 class="c-title">Triage first. Structure second. Ship third.</h2>
+      <div class="two">
+        <div>
+          <div class="card-lbl" style="margin-bottom:10px">Step 1 &middot; Categorize everything</div>
+          <div class="quad">
+            <div class="qc q1">
+              <div class="qt">🔴 Revenue Risk</div>
+              <div class="qs">Data quality &amp; usability tied to renewals</div>
+            </div>
+            <div class="qc q2">
+              <div class="qt">🌐 Global Mandates</div>
+              <div class="qs">Leadership-committed roadmap items</div>
+            </div>
+            <div class="qc q3">
+              <div class="qt">💡 Improvements</div>
+              <div class="qs">Nice-to-have, lower urgency</div>
+            </div>
+            <div class="qc q4">
+              <div class="qt">🗑 Noise</div>
+              <div class="qs">Duplicate, stale, or out-of-scope</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card-lbl" style="margin-bottom:10px">Step 2 &middot; Score each item</div>
+          <ul class="steps">
+            <li>
+              <span class="sn">→</span>
+              <div><div class="sh">Customer impact</div><div class="sb2">How many customers affected? Is it blocking a renewal conversation?</div></div>
+            </li>
+            <li>
+              <span class="sn">→</span>
+              <div><div class="sh">Engineering effort</div><div class="sb2">Quick fix vs. multi-sprint. Map to available capacity — not wishlist.</div></div>
+            </li>
+            <li>
+              <span class="sn">→</span>
+              <div><div class="sh">Strategic alignment</div><div class="sb2">Overlap with Global priorities? Double-count the value.</div></div>
+            </li>
+            <li>
+              <span class="sn">→</span>
+              <div><div class="sh">Testability</div><div class="sb2">Can we define a clear acceptance criterion before writing a line of code?</div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="abox">
+        <div class="abox-lbl">Assumption</div>
+        <p>Engineering has at least 20–30% uncommitted capacity. I'd validate this on day one before confirming any commitments to leadership or CS.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 03: C1 90-DAY PLAN ── -->
+  <div class="slide" id="s3">
+    <div class="inner s-c2">
+      <div class="c-eyebrow">Case 01 &middot; Execution</div>
+      <h2 class="c-title">90 days. Three phases. Two parallel tracks.</h2>
+      <div class="tl">
+        <div class="tlp ap">
+          <div class="tl-lbl">Days 1–14 &middot; Triage</div>
+          <div class="tl-h">Orient &amp; Diagnose</div>
+          <ul class="tl-li">
+            <li>Audit backlog with CS, Sales &amp; Eng</li>
+            <li>Tag renewal-risk items by customer impact</li>
+            <li>Confirm Eng capacity &amp; committed work</li>
+            <li>Align on Global mandate scope</li>
+            <li>Create one shared backlog view</li>
+          </ul>
+        </div>
+        <div class="tlp">
+          <div class="tl-lbl">Days 15–45 &middot; Deliver</div>
+          <div class="tl-h">Quick Wins + Foundations</div>
+          <ul class="tl-li">
+            <li>Ship high-impact / low-effort fixes</li>
+            <li>Write testable requirements for Global items</li>
+            <li>Weekly sync: Eng, CS, Product</li>
+            <li>Communicate progress to at-risk customers</li>
+            <li>Lock definition of done with Eng</li>
+          </ul>
+        </div>
+        <div class="tlp">
+          <div class="tl-lbl">Days 46–90 &middot; Ship</div>
+          <div class="tl-h">Global Priorities + Validate</div>
+          <ul class="tl-li">
+            <li>Deliver committed Global roadmap items</li>
+            <li>Close renewal-risk tickets with CS sign-off</li>
+            <li>Review backlog health &amp; remaining debt</li>
+            <li>Document learnings for future sprints</li>
+            <li>Report outcomes to leadership with data</li>
+          </ul>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="sticky">"Two tracks — customer retention fixes and global delivery — run in parallel, not sequentially. I protect engineering focus not by cutting scope, but by reducing ambiguity. Clean requirements and tight handovers cut context-switching cost more than scope reductions do."</div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 04: C2 SITUATION ── -->
+  <div class="slide" id="s4">
+    <div class="inner s-purple">
+      <div class="case-bg case-bg-dark">2</div>
+      <div class="eyebrow ey-light">Case 02 &middot; Global vs. Regional</div>
+      <h2 class="sec-title st-light">A global feature that doesn't fit the U.S. market. Who wins?</h2>
+      <div class="ctx ctx-light">
+        <strong>The situation:</strong> A globally-built feature for Construction Wire is planned for rollout in North America. U.S. Sales and customers say the workflows and data don't match local reality. Global Product won't change it — citing roadmap commitments and scalability concerns. Commercial teams are pushing for adjustments to hit near-term revenue goals.
+      </div>
+      <div class="tags">
+        <span class="tag tg-red">Misaligned Workflows</span>
+        <span class="tag tg-purple">Global Roadmap Friction</span>
+        <span class="tag tg-lime">Near-term Revenue Pressure</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 05: C2 STAKEHOLDER NAV ── -->
+  <div class="slide" id="s5">
+    <div class="inner s-c1">
+      <div class="c-eyebrow">Case 02 &middot; Diagnosis &amp; Alignment</div>
+      <h2 class="c-title">Separate opinion from evidence. Build a shared problem statement.</h2>
+      <div class="four">
+        <div class="card">
+          <div class="card-lbl">Step 1 &middot; Evidence Gathering</div>
+          <div class="card-h">Turn "it doesn't fit" into documented, specific gaps</div>
+          <div class="card-b">Run structured interviews with 3–5 U.S. Sales reps and 2–3 customers. Map exact friction points: which workflow step breaks, what data is missing, what the workaround is. Quantify revenue exposure.</div>
+        </div>
+        <div class="card">
+          <div class="card-lbl">Step 2 &middot; Global Product Bridge</div>
+          <div class="card-h">Bring data and a proposal — not a complaint</div>
+          <div class="card-b">Frame as a shared risk: "Here are 3 specific gaps blocking NA adoption. Which ones can we solve without derailing the roadmap?" Collaborative, not confrontational.</div>
+        </div>
+        <div class="card">
+          <div class="card-lbl">Step 3 &middot; Classify the Feedback</div>
+          <div class="card-h">Not all feedback is equal</div>
+          <div class="card-b">
+            <span class="tag tg-red" style="font-size:9px;display:inline-block;margin-bottom:5px">Blockers</span> Prevent adoption — must resolve pre-launch<br><br>
+            <span class="tag tg-lime" style="font-size:9px;display:inline-block;margin-bottom:5px">Workarounds</span> Painful but functional — document &amp; log<br><br>
+            <span class="tag tg-purple" style="font-size:9px;display:inline-block">Preferences</span> Park until post-launch data is available
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-lbl">Step 4 &middot; Commercial Alignment</div>
+          <div class="card-h">Give Sales a message that's true and useful</div>
+          <div class="card-b">Define what can be promised at launch vs. what's on the roadmap. Avoid overpromising unconfirmed features. Build enablement that works with the product as it exists today.</div>
+        </div>
+      </div>
+      <div class="abox">
+        <div class="abox-lbl">Assumption</div>
+        <p>At least one reachable Global Product counterpart is willing to engage. If not — building that relationship is day one priority, before any change request exists.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 06: C2 LAUNCH DECISION ── -->
+  <div class="slide" id="s6">
+    <div class="inner s-c2">
+      <div class="c-eyebrow">Case 02 &middot; Launch Decision</div>
+      <h2 class="c-title">Three outcomes. One clear decision process.</h2>
+      <div class="three">
+        <div class="card" style="border-color:rgba(255,100,100,.28)">
+          <div class="card-accent ca-red"></div>
+          <div class="card-lbl" style="color:#FF9090">Outcome A</div>
+          <div class="card-h">Delay &amp; Fix</div>
+          <div class="card-b">True blockers that can't be worked around &rarr; delay with a fixed date. Not "we're working on it" — a real date. Communicate proactively to Commercial.</div>
+        </div>
+        <div class="card" style="border-color:rgba(200,241,53,.28)">
+          <div class="card-accent"></div>
+          <div class="card-lbl">Outcome B</div>
+          <div class="card-h">Launch with Guardrails</div>
+          <div class="card-b">Gaps are painful but non-blocking &rarr; launch to a controlled cohort (3–5 accounts). Document workarounds. Use real adoption data to build the case for Global roadmap changes.</div>
+        </div>
+        <div class="card" style="border-color:rgba(92,61,130,.4)">
+          <div class="card-accent ca-purple"></div>
+          <div class="card-lbl" style="color:#C4A8FF">Outcome C</div>
+          <div class="card-h">Full Launch + Commit</div>
+          <div class="card-b">Gaps are preference-level &rarr; launch fully. Lock a written roadmap commitment for NA-specific improvements and give Commercial a timeline for their conversations.</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="sticky">"The decision isn't mine alone — but I own making it clear, fast, and documented. Strong opinions from multiple sides are a signal to move toward data, not toward consensus-seeking. Consensus-seeking in ambiguous situations produces delay, not alignment."</div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 07: C3 SITUATION ── -->
+  <div class="slide" id="s7">
+    <div class="inner s-dark">
+      <div class="case-bg case-bg-dark" style="opacity:.04">3</div>
+      <div class="eyebrow ey-light">Case 03 &middot; Product-Led Growth</div>
+      <h2 class="sec-title st-light">Missing targets. Low engagement. Low conversion. Where does the problem actually live?</h2>
+      <div class="ctx ctx-light">
+        <strong>The situation:</strong> A product line is not hitting growth targets. Initial investigation reveals that both user engagement metrics and conversion rates are below expectations. The task is to diagnose the root cause and identify a clear, sequenced path to growth — not just optimize symptoms.
+      </div>
+      <div class="tags">
+        <span class="tag tg-red">Below-target Conversion</span>
+        <span class="tag tg-red">Low Engagement</span>
+        <span class="tag tg-lime">Realignment Needed</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 08: C3 METRICS ── -->
+  <div class="slide" id="s8">
+    <div class="inner s-c1">
+      <div class="c-eyebrow">Case 03 &middot; Diagnosis</div>
+      <h2 class="c-title">Follow the funnel. Find where users stop — and why.</h2>
+      <div class="two">
+        <div>
+          <div class="card-lbl" style="margin-bottom:10px">Funnel health check</div>
+          <div class="funnel">
+            <div class="fs">
+              <div class="fi">🎯</div><div class="fl">Acquisition</div>
+              <div class="fb"><div class="ff fh" style="width:85%"></div></div>
+              <div class="fp">OK</div>
+            </div>
+            <div class="fs">
+              <div class="fi">⚡</div><div class="fl">Activation</div>
+              <div class="fb"><div class="ff fme" style="width:50%"></div></div>
+              <div class="fp">⚠</div>
+            </div>
+            <div class="fs">
+              <div class="fi">🔁</div><div class="fl">Retention</div>
+              <div class="fb"><div class="ff flo" style="width:35%"></div></div>
+              <div class="fp">🔴</div>
+            </div>
+            <div class="fs">
+              <div class="fi">💰</div><div class="fl">Conversion</div>
+              <div class="fb"><div class="ff flo" style="width:28%"></div></div>
+              <div class="fp">🔴</div>
+            </div>
+          </div>
+          <p style="font-size:10px;color:rgba(255,255,255,.3);margin-top:10px;font-style:italic">* Illustrative — actual values will be adjusted to real case scenarios</p>
+        </div>
+        <div>
+          <div class="card-lbl" style="margin-bottom:10px">Diagnostic questions per stage</div>
+          <ul class="steps">
+            <li>
+              <span class="sn">A</span>
+              <div><div class="sh">Activation drop-off</div><div class="sb2">Where in onboarding do users stop? Is there a step that requires data they don't have yet?</div></div>
+            </li>
+            <li>
+              <span class="sn">R</span>
+              <div><div class="sh">Retention signal</div><div class="sb2">Which users do retain? What feature did they use first? That's the aha moment — engineer onboarding toward it.</div></div>
+            </li>
+            <li>
+              <span class="sn">C</span>
+              <div><div class="sh">Conversion blockers</div><div class="sb2">Are users getting real value before the ask? Is the value prop clear at the moment of conversion?</div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="abox">
+        <div class="abox-lbl">Assumption</div>
+        <p>Basic product analytics (event tracking) exists. If not — instrumenting the funnel is step zero. Without data, you're optimizing by intuition, which is expensive and usually wrong.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 09: C3 REALIGNMENT ── -->
+  <div class="slide" id="s9">
+    <div class="inner s-c2">
+      <div class="c-eyebrow">Case 03 &middot; Realignment</div>
+      <h2 class="c-title">Fix the floor before you build the ceiling.</h2>
+      <div class="four" style="margin-bottom:14px">
+        <div class="card">
+          <div class="card-lbl">Track 1 &middot; Fix Activation</div>
+          <div class="card-h">Reduce time-to-value</div>
+          <div class="card-b">Identify the single action that predicts retention. Redesign onboarding to drive users there within session one. Remove every friction step that isn't strictly necessary. Test with a small cohort first.</div>
+        </div>
+        <div class="card">
+          <div class="card-lbl">Track 2 &middot; Improve Retention</div>
+          <div class="card-h">Reinforce the habit loop</div>
+          <div class="card-b">Interview retained users — not churned ones. What do they use most, and when? Build lightweight triggers (notifications, digests, in-app nudges) that bring disengaged users back to the core value moment.</div>
+        </div>
+        <div class="card">
+          <div class="card-lbl">Track 3 &middot; Conversion</div>
+          <div class="card-h">Align the ask to the value moment</div>
+          <div class="card-b">Don't optimize conversion in isolation. Fix activation and retention first — then test conversion levers with users already experiencing value. Premature conversion pushes erode trust fast.</div>
+        </div>
+        <div class="card">
+          <div class="card-lbl">Track 4 &middot; Commercial Alignment</div>
+          <div class="card-h">Sync Sales &amp; CS on engagement signals</div>
+          <div class="card-b">Share engagement data with CS to identify at-risk accounts early. Give Sales clear criteria for when a user is product-ready for an upsell. Prevent premature asks that show up in the next renewal cycle.</div>
+        </div>
+      </div>
+      <div class="sticky">"Growth isn't a single lever — it's a sequence. Activation rate as the leading indicator, retention as proof, conversion as the outcome. When every team agrees on that sequence, you stop having the wrong arguments."</div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ─── NAV CONTROLS ─── -->
+<div class="nav-controls">
+  <button class="nbtn" id="pb" onclick="go(-1)" disabled>&#8592;</button>
+  <button class="nbtn" id="nb" onclick="go(1)">&#8594;</button>
+</div>
+<div class="counter" id="ctr">1 / 10</div>
+
+<script>
+  let cur = 0;
+  const TOTAL = 10;
+  const slides = document.querySelectorAll('.slide');
+  const navs   = document.querySelectorAll('.nav-item');
+
+  function goTo(n) {
+    slides[cur].classList.remove('active');
+    navs[cur].classList.remove('active');
+    cur = Math.max(0, Math.min(n, TOTAL - 1));
+    slides[cur].classList.add('active');
+    navs[cur].classList.add('active');
+    navs[cur].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    document.getElementById('pb').disabled = cur === 0;
+    document.getElementById('nb').disabled = cur === TOTAL - 1;
+    document.getElementById('ctr').textContent = `${cur + 1} / ${TOTAL}`;
+    // scroll slide back to top on change
+    slides[cur].scrollTop = 0;
+  }
+
+  function go(d) { goTo(cur + d); }
+
+  navs.forEach((n, i) => n.addEventListener('click', () => goTo(i)));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   go(-1);
+  });
+</script>
+</body>
+</html>
