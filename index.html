@@ -334,13 +334,81 @@
   }
 
   /* ─── MOBILE ─── */
+  .mobile-nav { display: none; }
+
   @media (max-width: 700px) {
     .sidebar { display: none; }
-    .inner { padding: 36px 28px; }
-    .two, .three, .four { grid-template-columns: 1fr; }
-    .tl { grid-template-columns: 1fr; }
-    .cover-h { font-size: 34px; }
-    .quad { height: auto; }
+    .main { width: 100vw; }
+    .slide { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .inner { padding: 28px 22px 110px; min-height: 100vh; justify-content: flex-start; }
+
+    .cover-h   { font-size: 30px; line-height: 1.1; }
+    .cover-sub { font-size: 13px; }
+    .sec-title { font-size: 24px; }
+    .c-title   { font-size: 20px; margin-bottom: 18px; }
+    .case-bg   { font-size: 80px; }
+
+    .two, .three, .four { grid-template-columns: 1fr; gap: 10px; }
+    .tl  { grid-template-columns: 1fr; gap: 0; }
+    .tlp { border-top: 2px solid rgba(255,255,255,.1); padding: 14px 0; }
+    .tlp.ap { border-top-color: var(--lime); }
+
+    .quad { height: auto; grid-template-columns: 1fr 1fr; }
+    .qc { padding: 10px; }
+    .qt { font-size: 10px; }
+    .qs { font-size: 9px; }
+
+    .card   { padding: 14px; }
+    .card-b { font-size: 12px; }
+    .fl     { min-width: 90px; font-size: 11px; }
+
+    .nav-controls { bottom: 70px; right: 16px; gap: 10px; }
+    .nbtn    { width: 46px; height: 46px; font-size: 18px; }
+    .counter { bottom: 82px; right: 120px; font-size: 11px; }
+
+    .mobile-nav {
+      display: flex;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--purple);
+      border-top: 1px solid rgba(200,241,53,.15);
+      overflow-x: auto;
+      padding: 10px 12px;
+      gap: 6px;
+      z-index: 200;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .mobile-nav::-webkit-scrollbar { display: none; }
+    .mnav-item {
+      flex-shrink: 0;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      padding: 6px 12px;
+      border-radius: 100px;
+      border: 1px solid rgba(200,241,53,.2);
+      color: rgba(200,241,53,.6);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all .18s;
+    }
+    .mnav-item.active {
+      background: var(--lime);
+      color: var(--purple);
+      border-color: var(--lime);
+      font-weight: 600;
+    }
+
+    .pills { gap: 7px; }
+    .pill  { font-size: 9px; padding: 4px 10px; }
+    .tags  { gap: 6px; }
+    .tag   { font-size: 8px; padding: 3px 8px; }
+    .ctx   { font-size: 12.5px; padding: 12px 14px; }
+    .abox  { margin-top: 12px; padding: 10px 14px; }
+    .abox p { font-size: 11px; }
+    .sticky { font-size: 11.5px; padding: 11px 14px; }
+    .sh  { font-size: 12px; }
+    .sb2 { font-size: 11px; }
   }
 
   /* ─── ANIMATIONS ─── */
@@ -729,23 +797,43 @@
 </div>
 <div class="counter" id="ctr">1 / 10</div>
 
+<!-- ─── MOBILE BOTTOM NAV ─── -->
+<nav class="mobile-nav" id="mobile-nav">
+  <div class="mnav-item active" onclick="goTo(0)">00 Cover</div>
+  <div class="mnav-item" onclick="goTo(1)">01 C1 Situation</div>
+  <div class="mnav-item" onclick="goTo(2)">02 Priority</div>
+  <div class="mnav-item" onclick="goTo(3)">03 90-Day Plan</div>
+  <div class="mnav-item" onclick="goTo(4)">04 C2 Situation</div>
+  <div class="mnav-item" onclick="goTo(5)">05 Stakeholders</div>
+  <div class="mnav-item" onclick="goTo(6)">06 Launch</div>
+  <div class="mnav-item" onclick="goTo(7)">07 C3 Situation</div>
+  <div class="mnav-item" onclick="goTo(8)">08 Metrics</div>
+  <div class="mnav-item" onclick="goTo(9)">09 Realignment</div>
+</nav>
+
 <script>
   let cur = 0;
   const TOTAL = 10;
   const slides = document.querySelectorAll('.slide');
   const navs   = document.querySelectorAll('.nav-item');
 
+  const mnavs = document.querySelectorAll('.mnav-item');
+
   function goTo(n) {
     slides[cur].classList.remove('active');
     navs[cur].classList.remove('active');
+    if (mnavs[cur]) mnavs[cur].classList.remove('active');
     cur = Math.max(0, Math.min(n, TOTAL - 1));
     slides[cur].classList.add('active');
     navs[cur].classList.add('active');
     navs[cur].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (mnavs[cur]) {
+      mnavs[cur].classList.add('active');
+      mnavs[cur].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
     document.getElementById('pb').disabled = cur === 0;
     document.getElementById('nb').disabled = cur === TOTAL - 1;
     document.getElementById('ctr').textContent = `${cur + 1} / ${TOTAL}`;
-    // scroll slide back to top on change
     slides[cur].scrollTop = 0;
   }
 
@@ -757,6 +845,22 @@
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
     if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   go(-1);
   });
+
+  // Touch swipe support for mobile
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      if (dx < 0) go(1);
+      else go(-1);
+    }
+  }, { passive: true });
 </script>
 </body>
 </html>
